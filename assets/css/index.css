@@ -12,6 +12,7 @@
   margin-left: 20px;
 }
 
+
 iframe {
   width: 100%;
   height: 100%;
@@ -21,9 +22,11 @@ iframe {
   overflow: hidden;
 }
 
+
 a {
   transition: none !important;
 }
+
 
 .userinfo {
   height: 60px;
@@ -42,6 +45,7 @@ a {
   height: 40px;
 }
 
+
 .text-avatar {
   display: inline-block;
   width: 40px;
@@ -59,4 +63,8 @@ a {
 
 .layui-nav-item a {
   font-size: 12px;
+}
+
+.layui-nav-img {
+  display: none;
 }

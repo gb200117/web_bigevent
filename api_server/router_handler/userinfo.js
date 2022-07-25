@@ -9,7 +9,7 @@ module.exports.getUserInfo = (request, response) => {
   db.query(sqlstr, request.user.id, (err, results) => {
     if (err) return response.cc(err)
     if (results.length !== 1) return response.cc('获取用户信息失败！')
-    response.cc({
+    response.send({
       status: 0,
       message: '获取用户基本信息成功！',
       data: results[0]
