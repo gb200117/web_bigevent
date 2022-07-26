@@ -2,7 +2,7 @@
 
 // 导入数据库模块
 const db = require('../db/index.js')
-// 导入密码加密包bcryptjs
+// 导入密码加密解密包bcryptjs
 const bcrypt = require('bcryptjs')
 // 导入token加密的包
 const jwt = require('jsonwebtoken');
