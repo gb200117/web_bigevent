@@ -7,6 +7,8 @@ const Joi = require('joi')
 app.use(cors())
 // 解析 x-www-form-urlencoded 格式的表单数据
 app.use(express.urlencoded({ extended: false }))
+// 托管静态资源文件
+app.use('/uploads', express.static('./uploads'))
 // 中间件   一定要在路由之前，封装res.css函数(作用：在处理函数中需要多次的调用response.send()向客户端响应失败的结果，减少的使用response.send())
 app.use((request, response, next) => {
   // status 默认值为1 表示失败的情况
@@ -30,6 +32,12 @@ const userRouter = require('./router/user.js')
 app.use('/api', userRouter)
 const userInfo = require('./router/userinfo.js')
 app.use('/my', userInfo)
+// 文章类别
+const artcateRouter = require('./router/article.js')
+app.use('/my/article', artcateRouter)
+// 文章管理
+const artcatesRouter = require('./router/articles.js')
+app.use('/my/article', artcatesRouter)
 // 错误级别的中间件
 app.use((err, request, response, next) => {
   // 验证失败导致  (在response里面不允许连续两次调用response.send())

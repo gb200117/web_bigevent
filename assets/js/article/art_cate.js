@@ -1,4 +1,123 @@
-$(function() {
+$(function () {
+  let layer = layui.layer
+  let form = layui.form
+  initArtCateList()
+  function initArtCateList() {
+    $.ajax({
+      method: 'get',
+      url: '/my/article/cates',
+      success: function (res) {
+        if (res.status !== 0) return layer.msg('获取文章分类列表失败！')
+        let htmlStr = template('tpl-table', res)
+        $('tbody').html('').append(htmlStr)
+      }
+      /* success: function (res) {
+         if (res.status !== 0) return layer.msg('获取文章分类列表失败！')
+         res.data.forEach(function (items, i) {
+           let tr = $('<tr></tr>')
+           let td = `<td>${items.name}</td><td>${items.alias}</td><td>
+           <button type="button" class="layui-btn layui-btn-xs">编辑</button>
+           <button type="button" class="layui-btn layui-btn-danger layui-btn-xs">删除</button></td>`
+           tr.html(td)
+           $('tbody').append(tr)
+         })
+       }*/
+    })
+  }
+  // 添加类别
+  var indexAdd = null
+  $('#btnAddCate').on('click', function (e) {
+    e.preventDefault();
+    indexAdd = layer.open({
+      type: 1,
+      area: ['500px', '250px'],
+      title: '添加文章分类',
+      content: $('#dialog-add').html()
+    });
+  })
+  $('body').on('submit', '#form-add', function (e) {
+    e.preventDefault()
+    $.ajax({
+      method: 'post',
+      url: '/my/article/addcates',
+      data: $(this).serialize(),
+      success: function (res) {
+        console.log(res);
+        if (res.status !== 0) return layer.msg('添加类别失败！')
+        initArtCateList()
+        layer.msg('新增分类成功！')
+        // 根据索引，关闭对应的弹出层
+        layer.close(indexAdd)
+
+      }
+    })
+  })
+
+  // 编辑文章分类
+  let indexEdit = null
+  $('tbody').on('click', '.btn_edit', function (e) {
+    e.preventDefault();
+    indexEdit = layer.open({
+      type: 1,
+      area: ['500px', '250px'],
+      title: '修改文章分类',
+      content: $('#dialog-edit').html()
+    });
+    let id = $(this).attr('data-id')
+    // 根据 id 获取文章分类数据
+    $.ajax({
+      method: 'get',
+      url: `/my/article/cates/${id}`,
+      success: function (res) {
+        if (res.status !== 0) return layer.msg('获取文章分类数据失败！')
+        form.val('formTest', res.data)
+      }
+
+    })
+  })
+  // 通过代理的形式，为修改分类的表单绑定 submit 事件
+  $('body').on('submit', '#form-edit', function (e) {
+    e.preventDefault()
+    $.ajax({
+      method: 'post',
+      url: '/my/article/updatecate',
+      data: $(this).serialize(),
+      success: function (res) {
+        console.log(res);
+        if (res.status !== 0) return layer.msg('修改文章分类数据失败！')
+        initArtCateList()
+        layer.msg('修改文章分类数据成功！')
+        // 根据索引，关闭对应的弹出层
+        layer.close(indexEdit)
+      }
+    })
+  })
+  // 通过代理的形式，为删除按钮绑定点击事件
+  $('tbody').on('click', '.btn_delete', function () {
+    let id = $(this).attr('data-id')
+    layer.confirm('确认删除?', { icon: 3, title: '提示' }, function (index) {
+      //do something
+      $.ajax({
+        method: 'get',
+        url: `/my/article/deletecate/${id}`,
+        success: function (res) {
+          console.log(res);
+          if (res.status !== 0) return layer.msg('删除失败！')
+          initArtCateList()
+          layer.msg('删除成功！')
+          layer.close(index);
+        }
+      })
+    });
+  })
+
+})
+
+
+
+
+
+/*$(function() {
   var layer = layui.layer
   var form = layui.form
 
@@ -106,3 +225,4 @@ $(function() {
     })
   })
 })
+*/

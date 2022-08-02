@@ -1,0 +1,4 @@
+my_db_01 数据库
+
+在运行前端程序时：在VScode中安装express插件   ctrl+shift+p    输入express   点击以 含有open   in Brower
+不然会出现发布文章后无法正常跳转到文章分类页面
