@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const fs = require('fs')
 // 导入 Joi 来定义验证规则
 const Joi = require('joi')
 //解决跨域

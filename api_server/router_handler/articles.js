@@ -7,9 +7,9 @@ const path = require('path')
 const db = require('../db/index')
 // 发布文章
 exports.addArticle_handler = function (request, response) {
-  // console.log(request.body) // 文本类型的数据
+  console.log(request.body) // 文本类型的数据
   // console.log('--------分割线----------')
-  // console.log(request.file) // 文件类型的数据
+  console.log(request.file) // 文件类型的数据
   // 发布新文章的处理函数
 
   // 手动判断是否上传了文章封面
@@ -24,6 +24,7 @@ exports.addArticle_handler = function (request, response) {
     // 文章作者的Id
     author_id: request.user.id,
   }
+  console.log(articleInfo);
   const sql = `insert into ev_articles set ?`
 
   // 执行 SQL 语句

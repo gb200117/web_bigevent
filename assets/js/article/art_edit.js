@@ -35,7 +35,8 @@ $(function () {
         if (res.status !== 0) return layer.msg('获取文章失败！')
         console.log(res);
         form.val("form-edit", res.data[0])
-        // $('#image').prop('src', res.data[0].cover_img)
+        $('#image').prop('src', 'http://127.0.0.1:3007' + res.data[0].cover_img)
+        console.log("渲染页面初始化数据", 'http://127.0.0.1:3007' + res.data[0].cover_img);
       }
     })
   }
